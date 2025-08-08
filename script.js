@@ -1,11 +1,25 @@
 
+
+
+
+/*
+
+1- you get three moves
+2- the move is used as an index
+3- the value of each index (move) represents the move the index beats
+
+*/
 const rock = 0;
 const paper = 1;
 const scissors = 2;
 
 const winningMove = [scissors, rock, paper];
-const movesAsStrings = ["rock", "paper", "scissors"];
 const movesNumber = 3;
+
+const movesAsStrings = ["rock", "paper", "scissors"];
+
+const roundsNumber = 5;
+
 
 let humanScore = 0;
 let computerScore = 0;
@@ -28,14 +42,41 @@ function getComputerChoice() {
 
 function playRound(humanChoice, computerChoice) {
 
+    if (humanChoice != computerChoice) {
+
+        if (winningMove[humanChoice] == computerChoice) {
+            humanScore += 1;
+            console.log("You Won! " + movesAsStrings[humanChoice] + " beats " + movesAsStrings[computerChoice] + " \n");
+            
+        }
+        else {
+            computerScore += 1;
+            console.log("You Lost! " + movesAsStrings[computerChoice] + " beats " + movesAsStrings[humanChoice] + " \n");
+        }
+    }
+    else {
+        console.log("It is a tie \n");
+    }
+
 }
 
-console.log(getHumanChoice());
+function playGame() {
 
-/*
+    for (let i = 0; i < roundsNumber; i += 1) {
+        playRound(getHumanChoice(), getComputerChoice());
+    }
 
-1- you get three moves
-2- the move is used as an index
-3- the value of each index (move) represents the move it beats
+    if (humanScore > computerScore) {
+        console.log("You Won!");
+    }
+    else if (humanScore < computerScore) {
+        console.log("You lost");
+    }
+    else {
+        console.log("It is a tie");
+    }
 
-*/
+}
+
+playGame();
+

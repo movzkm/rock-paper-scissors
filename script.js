@@ -20,27 +20,17 @@ const movesAsStrings = ["rock", "paper", "scissors"];
 
 const roundsNumber = 5;
 
-
+let humanChoice = 0;
 let humanScore = 0;
 let computerScore = 0;
 
 
-function getHumanChoice() {
-
-    let choice = prompt("Rock-Paper-Scissors").toLowerCase();
-
-    for (let i = 0; i < movesNumber; i += 1) {
-        if (choice == movesAsStrings[i]) {
-            return i;
-        }
-    }
-}
 
 function getComputerChoice() {
     return Math.floor((Math.random() * 10) % 3);
 }
 
-function playRound(humanChoice, computerChoice) {
+function playRound(computerChoice) {
 
     if (humanChoice != computerChoice) {
 
@@ -51,7 +41,7 @@ function playRound(humanChoice, computerChoice) {
         }
         else {
             computerScore += 1;
-            console.log("You Lost! " + movesAsStrings[computerChoice] + " beats " + movesAsStrings[humanChoice] + " \n");
+            console.log("You Lost! " + movesAsStrings[humanChoice] + " loses to " + movesAsStrings[computerChoice] + " \n");
         }
     }
     else {
@@ -60,23 +50,35 @@ function playRound(humanChoice, computerChoice) {
 
 }
 
-function playGame() {
 
-    for (let i = 0; i < roundsNumber; i += 1) {
-        playRound(getHumanChoice(), getComputerChoice());
-    }
+/*
+add the buttons
+*/
+const rockBtn = document.querySelector("#rockBtn");
+const paperBtn = document.querySelector("#paperBtn");
+const scissorsBtn = document.querySelector("#scissorsBtn");
 
-    if (humanScore > computerScore) {
-        console.log("You Won!");
-    }
-    else if (humanScore < computerScore) {
-        console.log("You lost");
-    }
-    else {
-        console.log("It is a tie");
-    }
+/*
+change their id to match the index
+*/
+rockBtn.setAttribute("id", rock.toString());
+paperBtn.setAttribute("id", paper.toString());
+scissorsBtn.setAttribute("id", scissors.toString());
 
+/*
+group them to add listeners at once
+*/
+const moveBtns = document.querySelectorAll(".moveBtn");
+moveBtns.forEach(move => {
+    move.addEventListener("click", (e) => {
+        selectChoice(e.currentTarget.getAttribute("id"));
+    })
+})
+
+/*
+taking the choice of the player
+*/
+function selectChoice(c) {
+    humanChoice = parseInt(c);
+    playRound(getComputerChoice());
 }
-
-playGame();
-

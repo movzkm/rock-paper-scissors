@@ -1,3 +1,30 @@
 body {
     background-color: darkgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap : 10px;
+}
+
+body * {
+    flex: 1 1 auto;
+    height: fit-content;
+    width: max-content;
+}
+
+#finalResult {
+    height: 30px;
+}
+
+#humanAndComputerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+
+#humanAndComputerContainer * {
+    flex: 1;
 }

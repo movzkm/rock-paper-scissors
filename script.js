@@ -18,38 +18,18 @@ const movesNumber = 3;
 
 const movesAsStrings = ["rock", "paper", "scissors"];
 
-const roundsNumber = 5;
 
+const winningScore = 5;
 let humanChoice = 0;
 let humanScore = 0;
 let computerScore = 0;
+let allowedToPlay = true;
 
-
-
-function getComputerChoice() {
-    return Math.floor((Math.random() * 10) % 3);
-}
-
-function playRound(computerChoice) {
-
-    if (humanChoice != computerChoice) {
-
-        if (winningMove[humanChoice] == computerChoice) {
-            humanScore += 1;
-            console.log("You Won! " + movesAsStrings[humanChoice] + " beats " + movesAsStrings[computerChoice] + " \n");
-            
-        }
-        else {
-            computerScore += 1;
-            console.log("You Lost! " + movesAsStrings[humanChoice] + " loses to " + movesAsStrings[computerChoice] + " \n");
-        }
-    }
-    else {
-        console.log("It is a tie \n");
-    }
-
-}
-
+const computerScoreField = document.querySelector("#computerScore");
+const humanScoreField = document.querySelector("#humanScore");
+const finalResult = document.querySelector("#finalResult");
+const computerChoiceField = document.querySelector("#computerChoice");
+const humanChoiceField = document.querySelector("#humanChoice");
 
 /*
 add the buttons
@@ -79,6 +59,45 @@ moveBtns.forEach(move => {
 taking the choice of the player
 */
 function selectChoice(c) {
-    humanChoice = parseInt(c);
-    playRound(getComputerChoice());
+    if (allowedToPlay) {
+        let cInt = parseInt(c);
+        humanChoice = cInt;
+        humanChoiceField.textContent = "Your Choice : " + movesAsStrings[cInt];
+        playRound(getComputerChoice());
+    }
+}
+
+function announceWinner() {
+    if (computerScore > humanScore) {
+        finalResult.textContent = "YOU LOST!";
+    }
+    else {
+        finalResult.textContent = "YOU WON!";
+    }
+}
+
+function getComputerChoice() {
+    let cChoice = Math.floor((Math.random() * 10) % 3);
+    computerChoiceField.textContent = "Computer Choice : " + movesAsStrings[cChoice].toString();
+    return cChoice;
+}
+
+function playRound(computerChoice) {
+
+    if (humanChoice != computerChoice) {
+
+        if (winningMove[humanChoice] == computerChoice) {
+            humanScore += 1;
+            humanScoreField.textContent = "Your Score : " + humanScore.toString();
+        }
+        else {
+            computerScore += 1;
+            computerScoreField.textContent = "Computer Score : " + computerScore.toString();
+        }
+    }
+    if (humanScore == winningScore || computerScore == winningScore) {
+        announceWinner();
+        allowedToPlay = false;
+    }
+
 }
